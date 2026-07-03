@@ -91,9 +91,7 @@ def analyze():
         "note": "SoldデータはAPI権限次第。v1は現在出品データで分析します。"
     })
 
-@app.route("/")
-def index():
-    return send_from_directory(".", "index.html")
+
 
 @app.route("/static/<path:filename>")
 def static_files(filename):
