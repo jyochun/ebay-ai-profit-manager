@@ -2,9 +2,9 @@
 import os, base64, statistics, requests
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, unquote
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".", static_folder=".")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev")
 
 EBAY_CLIENT_ID = os.getenv("EBAY_CLIENT_ID", "")
@@ -91,6 +91,13 @@ def analyze():
         "note": "SoldデータはAPI権限次第。v1は現在出品データで分析します。"
     })
 
+@app.route("/")
+def index():
+    return send_from_directory(".", "index.html")
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(".", filename)
 @app.route("/api/calc", methods=["POST"])
 def calc():
     d = request.get_json(force=True)
