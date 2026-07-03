@@ -2,7 +2,7 @@
 import os, base64, statistics, requests
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, unquote
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 
 app = Flask(__name__, template_folder=".", static_folder=".")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev")
@@ -51,7 +51,7 @@ def clean(prices):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return send_from_directory(".", "index.html")
 
 @app.route("/api/analyze")
 def analyze():
